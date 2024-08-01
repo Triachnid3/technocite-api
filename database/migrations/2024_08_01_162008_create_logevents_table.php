@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('logevents', function (Blueprint $table) {
             $table->id();
-            $table->integer('device_id');
-            $table->float('temperature');
-            $table->float('humidity');
-            $table->timestamps();
+            // $table->integer('device_id');
+            // $table->float('temperature');
+            // $table->float('humidity');
+            // $table->timestamps();
         });
     }
 

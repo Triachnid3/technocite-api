@@ -12,13 +12,13 @@ class Logs extends Model
     protected $table = 'LogData';
 
     protected $fillable = [
-        'device_id',
-        'temperature',
-        'humidity',
+        'DeviceID',
+        'Temperature',
+        'Humidity',
+        'LogTime',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 }

@@ -12,7 +12,8 @@ class LogsController extends Controller
      */
     public function index()
     {
-        return Logs::all();
+        // Return last 100 logs
+        return Logs::orderBy('LogTime', 'desc')->take(100)->get();
     }
 
     /**
@@ -21,9 +22,10 @@ class LogsController extends Controller
     public function store(Request $request)
     {
         $log = new Logs();
-        $log->device_id = $request->device_id ?? 1;
-        $log->temperature = $request->temperature;
-        $log->humidity = $request->humidity;
+        $log->DeviceID = $request->device_id ?? 1;
+        $log->Temperature = $request->temperature;
+        $log->Humidity = $request->humidity;
+        // $log->LogTime = now();
         $log->save();
         return $log;
     }
