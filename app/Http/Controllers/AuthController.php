@@ -12,7 +12,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(auth()->user());
+            return auth()->user();
         }
         return response()->json(['message' => 'Unauthorized'], 401);
     }

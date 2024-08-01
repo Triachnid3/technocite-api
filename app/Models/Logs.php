@@ -9,6 +9,8 @@ class Logs extends Model
 {
     use HasFactory;
 
+    protected $table = 'logevents';
+
     protected $fillable = [
         'device_id',
         'temperature',
