@@ -1,0 +1,35 @@
+name: Laravel FTP Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: composer install --no-dev --ignore-platform-reqs
+      - name: Clear Application Cache
+        run: php artisan optimize:clear
+      - name: Clear Config Cache
+        run: php artisan config:clear
+      - name: Clear Route Cache
+        run: php artisan route:clear
+      - name: Clear View Cache
+        run: php artisan view:clear
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+      - name: Deploy Application
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          local-dir: ./
+          server-dir: /sites/technocite.uwurl.fr/
+          exclude: |
+            .env
+            .git/**
