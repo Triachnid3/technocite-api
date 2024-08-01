@@ -10,3 +10,9 @@ Route::get('/user', function (Request $request) {
 Route::get('/hello', function (Request $request) {
     return "Hello world";
 });
+
+Route::post('/login', 'App\Http\Controllers\AuthController@login');
+Route::post('/register', 'App\Http\Controllers\AuthController@register');
+
+Route::get('/logs', 'App\Http\Controllers\LogsController@index');
+Route::post('/logs', 'App\Http\Controllers\LogsController@store');
