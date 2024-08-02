@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        if (auth()->attempt($credentials)) {
-            $request->session()->regenerate();
-            return auth()->user();
+        try {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                $auth = Auth::user();
+                $success['token'] = $auth->createToken('LaravelSanctumAuth')->plainTextToken;
+                $success['user'] = $auth = User::find($auth->id);
+                return $this->handleResponse($success, 'User logged in.', 200);
+            } else {
+                return $this->handleError('Unauthorised.', 401);
+            }
+        } catch (\Exception $e) {
+            return $this->handleError($e->getMessage(), 400);
         }
-        return response()->json(['message' => 'Unauthorized'], 401);
     }
 
     public function register(Request $request)
