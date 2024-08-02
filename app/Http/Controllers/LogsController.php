@@ -10,10 +10,16 @@ class LogsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // info('Requesting logs', $request->all());
+        $max = 100;
+        $request->max && $request->max > 500 ? $max = 500 : $max = $request->max;
+
+        $device_id = $request->device_id ?? 6;
+
         // Return last 100 logs
-        return Logs::orderBy('LogTime', 'desc')->take(100)->get();
+        return Logs::orderBy('LogTime', 'desc')->where('DeviceID', $device_id)->take($max)->get();
     }
 
     /**
