@@ -33,7 +33,9 @@ class LogsController extends Controller
         $log->Humidity = $request->humidity;
         // $log->LogTime = now();
         $log->save();
-        return $log;
+
+        // return code 200, created succesfully and the data
+        return response()->json($log, 200);
     }
 
     /**
