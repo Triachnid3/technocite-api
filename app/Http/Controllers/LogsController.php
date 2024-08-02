@@ -35,7 +35,9 @@ class LogsController extends Controller
         $log->save();
 
         // return code 200, created succesfully and the data
-        return response()->json($log, 200);
+        return response()->json([
+            'data' => $log,
+        ], 200);
     }
 
     /**
